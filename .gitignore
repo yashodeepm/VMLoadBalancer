@@ -1,5 +1,7 @@
 *.pyc
 run
 iambusy
-proj_env.sh
-backup_proj.sh
+sync
+backup
+.DS_Store
+cs6210-proj1.code-workspace
