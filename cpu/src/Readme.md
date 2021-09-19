@@ -19,7 +19,7 @@ Let me start by first giving an overview of what is going in the code and in the
 8. vCPU load can be calculated similarly using the other stored global array (output of `virDomainGetVcps`)
 9. If this is < 5%, then pinning is not changed (tp promote efficiency), else pinning decision is made based on the algorithm.
 
-##Algorithm
+## Algorithm
 I have used the Greedy multiway partitioning algorithm for implementation of the decision algorithm. Reference: https://www.jimherold.com/computer-science/greedy-number-partitions-in-java
 
 1. We create pCPU number of partitions each of which can hold a number of vCPUs.
