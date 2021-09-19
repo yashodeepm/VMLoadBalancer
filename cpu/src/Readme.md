@@ -24,13 +24,13 @@ I have used the Greedy multiway partitioning algorithm for implementation of the
 
 1. We create pCPU number of partitions each of which can hold a number of vCPUs.
 2. We sort the vCPU load array.
-3.  `For each domain present in the vCPU load array do
+3.  For each domain present in the vCPU load array do
 
 		* Get the least loaded partition from the partitions array based on the total load each partition is holding (Initially they are all 0).
 		* Assign the current domain picked to the least loaded partition
 		* Update the load of that partition by adding the current domain load to the partition load
 
-	repeat until all domains assigned`
+	repeat until all domains assigned
 4. Apply the pin config by reading the domains in each partition.
 
 
