@@ -27,8 +27,8 @@ void CPUScheduler(virConnectPtr conn,int interval);
 double computeVcpuLoad(virVcpuInfo prevDomainInfo, virVcpuInfo currDomainInfo, int interval);
 void computePcpuLoad(virTypedParameterPtr * perDomainCPUStats, double * pcpuLoad, int pcpuCount, int vcpuCount, int nparams, int interval);
 double computeStandardDeviation(double * cpuLoad, int cpuCount);
-int compareVcpuLoad(VcpuLoadInfo * load1, VcpuLoadInfo * load2);
-int comparePartitionSum(Partition * p1, Partition * p2);
+int compareVcpuLoad(const void * load1, const void * load2);
+int comparePartitionSum(const void * p1, const void * p2);
 
 virVcpuInfoPtr prevDomainInfo = NULL;
 virTypedParameterPtr * prevPerDomainCPUStats = NULL;
@@ -100,19 +100,11 @@ void CPUScheduler(virConnectPtr conn, int interval)
 			perror("Issue getting VCPU info\n");
 	}
 
-	// Print VCPU info to console
-	// for(int i = 0;i<vcpuCount;i++) {
-	// 	printf("cpu: %d cpuTime: %lld\n", vcpuInfoPtr[i].cpu, vcpuInfoPtr[i].cpuTime);
-	// }
-
 	// Get pCPU info
 	unsigned int pcpuCount;
 	int ret = virNodeGetCPUMap(conn, NULL, &pcpuCount, 0);
 	if (ret < 0) 
 		perror("Unable to get CPU map\n");
-	
-	// Print pCPU count to the console
-	// printf("pCPU count: %d\n", pcpuCount);
 
 	// Get per domain per CPU details
 	virTypedParameterPtr * perDomainCPUStats = (virTypedParameterPtr*)malloc(vcpuCount * sizeof(virTypedParameter));
@@ -124,41 +116,22 @@ void CPUScheduler(virConnectPtr conn, int interval)
 		perDomainCPUStats[i] = domainCPUStats;
 	}
 
-	// Print perDomainCPU stats variable
-	// for(int i = 0;i < vcpuCount; i++) {
-	// 	virTypedParameterPtr domainCPUStatsPtr = perDomainCPUStats[i];
-	// 	for(int j = 0;j < pcpuCount * nparams; j++) {
-	// 		printf("Field: %s Type: %d Value: %llu\n", domainCPUStatsPtr[j].field, domainCPUStatsPtr[j].type, domainCPUStatsPtr[j].value.ul);
-	// 	}
-	// }
-
 	/**
 	 * 1. If prevDomainInfo is NULL, then populate it and return for next iteration.
 	 * 2. If prevDomainInfo is not NULL then use current time to calculate the current load produced by each vCPU.
 	 * 3. Use this load to divide it into partitions and pin accordingly. To reduce overhead of pin changes, 
-	 *    calculate the standard deviation of the current load. If already < 5% then do not make the pin change.
+	 *    calculate the relative standard deviation of the current load. If already < 5% then do not make the pin change.
 	 **/
 	
 	if(prevDomainInfo == NULL) { prevDomainInfo = vcpuInfoPtr; prevPerDomainCPUStats = perDomainCPUStats; return; }
+
 	// The virDomainGetVcpus API returns domains in the order of their IDs so for an execution it does not change
-	// for(int i = 0;i<vcpuCount; i++) {
-	// 	printf("cpu: %d cpuTime: %lld\n", prevDomainInfo[i].cpu, prevDomainInfo[i].cpuTime);
-	// }
 	double * vcpuLoad = (double*)malloc(vcpuCount * sizeof(double));
-	for(int i = 0;i < vcpuCount; i++) {
-		vcpuLoad[i] = computeVcpuLoad(prevDomainInfo[i], vcpuInfoPtr[i], interval);
-		// printf("%lld %lld ", vcpuInfoPtr[i].cpuTime, prevDomainInfo[i].cpuTime);
-	}
-	// printf("\n");
+	for(int i = 0;i < vcpuCount; i++) { vcpuLoad[i] = computeVcpuLoad(prevDomainInfo[i], vcpuInfoPtr[i], interval); }
 	
 	// For computing the current pCPU load
 	double * pcpuLoad = (double*)malloc(pcpuCount * sizeof(double));
 	computePcpuLoad(perDomainCPUStats, pcpuLoad, pcpuCount, vcpuCount, nparams, interval);
-	// printf("------------------------------------------------------------\n");
-	// for(int i = 0;i < pcpuCount; i++) {
-	// 	printf("pCPU %d: %lf\n", i, pcpuLoad[i]);
-	// }
-	// printf("------------------------------------------------------------\n");
 	double standardDeviationOfCurrentPcpuLoad = computeStandardDeviation(pcpuLoad, pcpuCount);
 	printf("Standard Deviation of pCPU Load: %lf\n", standardDeviationOfCurrentPcpuLoad);
 
@@ -170,30 +143,19 @@ void CPUScheduler(virConnectPtr conn, int interval)
 		vcpuLoadInfo[i].domain = domains[i];
 		vcpuLoadInfo[i].vcpuLoad = vcpuLoad[i];
 	}
-	// printf("-------------------\n");
-	// printf("%lf %lf\n", vcpuLoadInfo[0].vcpuLoad, vcpuLoad[0]);
-	// printf("-------------------\n");
 
 	// Apply greedy multiway partition algorithm
 	Partition * partition = (Partition*)malloc(pcpuCount * sizeof(Partition));
 	for(int i = 0;i < pcpuCount; i++) {
 		partition[i].partitionSum = 0; // Initialise paritionSum to 0 and no domain
 		partition[i].domain = (virDomainPtr *)malloc(vcpuCount * sizeof(virDomainPtr));
-		memset(partition[i].domain, NULL, vcpuCount * sizeof(virDomainPtr));
+		memset(partition[i].domain, 0, vcpuCount * sizeof(virDomainPtr)); // Set pointers to NULL
 		partition[i].fill_index = 0;
 	}
 
 	qsort(vcpuLoadInfo, vcpuCount, sizeof(VcpuLoadInfo), compareVcpuLoad); // Sort VMs with resepect to load
-	for(int i = 0;i<vcpuCount;i++) {
-		printf("%lf ", vcpuLoadInfo[i].vcpuLoad);
-	}
 	printf("\n");
 	for(int i = 0;i < vcpuCount; i++) {
-		// qsort(partition, pcpuCount, sizeof(Partition), comparePartitionSum); // Sort Partitions with respect to each of their sums. We are optimising the total sum present in each partiion to be close to each other as much as possible.
-		// for(int i = 0;i<pcpuCount;i++) {
-		// 	printf("%lf ", partition[i].partitionSum);
-		// }
-		// printf("\n");
 		int least_index = 0;
 		double least_value = partition[0].partitionSum;
 		for(int j = 1;j < pcpuCount; j++) {
@@ -201,7 +163,6 @@ void CPUScheduler(virConnectPtr conn, int interval)
 		}
 		(partition[least_index].domain)[partition[least_index].fill_index] = vcpuLoadInfo[i].domain;
 		partition[least_index].partitionSum = (partition[least_index].partitionSum + vcpuLoadInfo[i].vcpuLoad);
-		// printf("partition[0].partitionSum: %d", partition[0].partitionSum);
 		(partition[least_index].fill_index)++;
 	}
 
@@ -210,12 +171,8 @@ void CPUScheduler(virConnectPtr conn, int interval)
 	}
 	printf("\n");
 
-	// char *cpumap = (char*)malloc(1*sizeof(char));
-	// virDomainGetVcpuPinInfo(domains[2], 1, cpumap, 1, 0);
-	// printf("%0x\n", cpumap[0]);
-
 	// Now that we have the partition bindings for each pCPU we need to pin the VMs accordingly
-	char cpumap[] = "a"; // random initialise
+	unsigned char cpumap[] = "a"; // random initialise
 	for(int i = 0;i < pcpuCount; i++) {
 		int j = 0;
 		while(j < vcpuCount && (partition[i].domain)[j] != NULL) {
@@ -232,12 +189,12 @@ void CPUScheduler(virConnectPtr conn, int interval)
 	prevDomainInfo = vcpuInfoPtr;
 }
 
-int comparePartitionSum(Partition * p1, Partition * p2) {
-	return p1->partitionSum - p2->partitionSum;
+int comparePartitionSum(const void * p1, const void * p2) {
+	return ((Partition*)p1)->partitionSum - ((Partition*)p2)->partitionSum;
 }
 
-int compareVcpuLoad(VcpuLoadInfo * load1, VcpuLoadInfo * load2) {
-	return load1->vcpuLoad - load2->vcpuLoad;
+int compareVcpuLoad(const void * load1, const void * load2) {
+	return ((VcpuLoadInfo*)load1)->vcpuLoad - ((VcpuLoadInfo*)load2)->vcpuLoad;
 }
 
 double computeVcpuLoad(virVcpuInfo prevDomainInfo, virVcpuInfo currDomainInfo, int interval) {
@@ -252,7 +209,6 @@ void computePcpuLoad(virTypedParameterPtr * perDomainCPUStats, double * pcpuLoad
 			sum += ((*(*(perDomainCPUStats + i) + j)).value.ul - (*(*(prevPerDomainCPUStats + i) + j)).value.ul);
 		}
 		pcpuLoad[i/2] = (sum/10000000.0)/interval;
-		// printf("CPU %d: %lf\n", i/2, pcpuLoad[i/2]);
 	}
 }
 
@@ -261,11 +217,8 @@ double computeStandardDeviation(double * cpuLoad, int cpuCount) {
 	for(int i = 0;i < cpuCount; i++)
 		sum += cpuLoad[i];
 	double mean = sum/cpuCount;
-	// printf("Mean: %lf\n", mean);
 	double sumOfSquares = 0;
 	for(int i = 0;i < cpuCount; i++) 
 		sumOfSquares += pow(cpuLoad[i] - mean, 2);
-	// printf("SumOfSquares: %lf\n", sumOfSquares);
-	// printf("Standard deviation: %lf\n", pow(sumOfSquares/(cpuCount-1), 0.5));
 	return (100*pow(sumOfSquares/(cpuCount - 1), 0.5))/mean;
 }

@@ -1,0 +1,182 @@
+Script started on 2021-09-19 15:54:55+00:00 [TERM="xterm-256color" TTY="/dev/pts/9" COLUMNS="364" LINES="88"]
+$ bash
+]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ python3 monitor.py -t runtest3.py 
+
+--------------------------------------------------
+Iteration number :  1
+0 - usage: 0.0 | mapping []
+1 - usage: 0.0 | mapping []
+2 - usage: 0.0 | mapping []
+3 - usage: 0.0 | mapping []
+
+--------------------------------------------------
+Iteration number :  2
+0 - usage: 0.0 | mapping ['aos_vm5']
+1 - usage: 0.0 | mapping ['aos_vm3', 'aos_vm1']
+2 - usage: 0.0 | mapping ['aos_vm7', 'aos_vm4']
+3 - usage: 0.0 | mapping ['aos_vm8', 'aos_vm2', 'aos_vm6']
+
+--------------------------------------------------
+Iteration number :  3
+0 - usage: 1.0 | mapping ['aos_vm7', 'aos_vm5']
+1 - usage: 0.0 | mapping ['aos_vm3', 'aos_vm1']
+2 - usage: 0.0 | mapping ['aos_vm4']
+3 - usage: 1.0 | mapping ['aos_vm8', 'aos_vm2', 'aos_vm6']
+
+--------------------------------------------------
+Iteration number :  4
+0 - usage: 1.0 | mapping ['aos_vm3', 'aos_vm5']
+1 - usage: 0.0 | mapping ['aos_vm1', 'aos_vm6']
+2 - usage: 1.0 | mapping ['aos_vm4']
+3 - usage: 0.0 | mapping ['aos_vm8', 'aos_vm7', 'aos_vm2']
+
+--------------------------------------------------
+Iteration number :  5
+0 - usage: 0.0 | mapping ['aos_vm3', 'aos_vm5']
+1 - usage: 0.0 | mapping ['aos_vm1', 'aos_vm6']
+2 - usage: 0.0 | mapping ['aos_vm4']
+3 - usage: 0.0 | mapping ['aos_vm8', 'aos_vm7', 'aos_vm2']
+
+--------------------------------------------------
+Iteration number :  6
+0 - usage: 3.0 | mapping ['aos_vm3', 'aos_vm8']
+1 - usage: 6.0 | mapping ['aos_vm7', 'aos_vm2', 'aos_vm5']
+2 - usage: 3.0 | mapping ['aos_vm1', 'aos_vm6', 'aos_vm4']
+3 - usage: 0.0 | mapping []
+
+--------------------------------------------------
+Iteration number :  7
+0 - usage: 96.0 | mapping ['aos_vm3', 'aos_vm8']
+1 - usage: 100.0 | mapping ['aos_vm7', 'aos_vm2', 'aos_vm5']
+2 - usage: 97.0 | mapping ['aos_vm1', 'aos_vm6', 'aos_vm4']
+3 - usage: 0.0 | mapping []
+
+--------------------------------------------------
+Iteration number :  8
+0 - usage: 74.0 | mapping ['aos_vm7', 'aos_vm5']
+1 - usage: 84.0 | mapping ['aos_vm2', 'aos_vm1']
+2 - usage: 91.0 | mapping ['aos_vm3', 'aos_vm6']
+3 - usage: 85.00000000000001 | mapping ['aos_vm8', 'aos_vm4']
+
+--------------------------------------------------
+Iteration number :  9
+0 - usage: 75.0 | mapping ['aos_vm7', 'aos_vm5']
+1 - usage: 95.0 | mapping ['aos_vm2', 'aos_vm1']
+2 - usage: 100.0 | mapping ['aos_vm3', 'aos_vm6']
+3 - usage: 99.0 | mapping ['aos_vm8', 'aos_vm4']
+
+--------------------------------------------------
+Iteration number :  10
+0 - usage: 83.0 | mapping ['aos_vm3', 'aos_vm8', 'aos_vm5']
+1 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+2 - usage: 100.0 | mapping ['aos_vm7', 'aos_vm1']
+3 - usage: 40.0 | mapping ['aos_vm4']
+
+--------------------------------------------------
+Iteration number :  11
+0 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8', 'aos_vm5']
+1 - usage: 86.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+2 - usage: 85.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+3 - usage: 38.0 | mapping ['aos_vm4']
+
+--------------------------------------------------
+Iteration number :  12
+0 - usage: 72.0 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 78.0 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 82.0 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 84.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  13
+0 - usage: 97.0 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 86.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 84.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  14
+0 - usage: 83.0 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 85.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 83.0 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  15
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  16
+0 - usage: 86.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 83.0 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 84.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  17
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 85.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 86.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  18
+0 - usage: 85.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 83.0 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 84.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  19
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 82.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  20
+0 - usage: 85.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 85.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 85.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  21
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 83.0 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 82.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  22
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 84.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 84.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  23
+0 - usage: 85.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 86.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 84.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 85.00000000000001 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  24
+0 - usage: 85.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 83.0 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 82.0 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
+
+--------------------------------------------------
+Iteration number :  25
+0 - usage: 84.00000000000001 | mapping ['aos_vm5', 'aos_vm4']
+1 - usage: 85.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
+2 - usage: 85.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
+3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
+]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ mv typescript vcpu_scheduler3.log
+]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ mv vcpu_scheduler3.log ../src/
+]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ cd ../src
+]0;ymahapatra3@grading: ~/project1-master/cpu/src
