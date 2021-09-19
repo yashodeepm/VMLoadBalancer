@@ -176,7 +176,9 @@ Iteration number :  25
 1 - usage: 85.00000000000001 | mapping ['aos_vm3', 'aos_vm8']
 2 - usage: 85.00000000000001 | mapping ['aos_vm2', 'aos_vm6']
 3 - usage: 83.0 | mapping ['aos_vm7', 'aos_vm1']
-]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ mv typescript vcpu_scheduler3.log
-]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ mv vcpu_scheduler3.log ../src/
-]0;ymahapatra3@grading: ~/project1-master/cpu/test[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/test[00m$ cd ../src
-]0;ymahapatra3@grading: ~/project1-master/cpu/src
+
+]0;ymahapatra3@grading: ~/project1-master/cpu/src[01;32mymahapatra3@grading[00m:[01;34m~/project1-master/cpu/src[00m$ exit
+exit
+$ exit
+
+Script done on 2021-09-19 16:39:34+00:00 [COMMAND_EXIT_CODE="0"]
