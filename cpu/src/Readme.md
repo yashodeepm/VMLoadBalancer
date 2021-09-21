@@ -33,5 +33,7 @@ I have used the Greedy multiway partitioning algorithm for implementation of the
 	repeat until all domains assigned
 4. Apply the pin config by reading the domains in each partition.
 
+I have used 2 seconds as the time interval. I have done this because the CPU load is fluctuating a lot initially before settling at a value and during this time having a 1 second time interval is really agressive and changes the pin configurations a lot before stabilising. A 2 second time interval gives the VM more time to settle down. This gives a graph which has quite a less number of pin changes.
+
 
 
