@@ -14,7 +14,7 @@ class TestLib:
         ips = TestLib.getIps(vmNames) 
         for ip in ips:
             print('Copy {} to {}.'.format(fileLocation, ip))
-            os.popen('scp -r {} ubuntu@{}:~/'.format(fileLocation, ip))
+            os.popen('scp -o StrictHostKeyChecking=no -r {} ubuntu@{}:~/'.format(fileLocation, ip))
 
     @staticmethod
     def startTestCase(templateCmd, ipAndValues):
