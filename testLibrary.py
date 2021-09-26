@@ -21,7 +21,7 @@ class TestLib:
         FNULL = open(os.devnull, 'w')
         pipes = dict()
         for ip,vals in ipAndValues.items():
-            sshCmd = "ssh ubuntu@{} '".format(ip)
+            sshCmd = "ssh -o StrictHostKeyChecking=no ubuntu@{} '".format(ip)
             sshCmd += templateCmd + "'"
             try:
                 pipe = subprocess.Popen(sshCmd.format(vals), stdout=FNULL, shell=True)

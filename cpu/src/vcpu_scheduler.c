@@ -206,7 +206,7 @@ void computePcpuLoad(virTypedParameterPtr * perDomainCPUStats, double * pcpuLoad
 	for(int i = 1;i < nparams * pcpuCount; i += 2) { 
 		double sum = 0;
 		for(int j = 0;j < vcpuCount; j++) {
-			sum += ((*(*(perDomainCPUStats + i) + j)).value.ul - (*(*(prevPerDomainCPUStats + i) + j)).value.ul);
+			sum += ((perDomainCPUStats[j][i]).value.ul - (prevPerDomainCPUStats[j][i]).value.ul);
 		}
 		pcpuLoad[i/2] = (sum/10000000.0)/interval;
 	}
