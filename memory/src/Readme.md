@@ -14,3 +14,26 @@
 4. Host should not release memory if it has less than or equal to 200MB of unused memory.
 5. While submitting, write your algorithm and logic in this Readme.
 
+### Code description and Algorithm
+
+Overview of code
+1. First all active domain info is collected.
+2. Set the interval of stats collection to the interval in which MemoryScheduler is invoked.
+3. Store the maximum size that each of the VMs' balloons can attain
+4. Collect current info on memory stats of each of the domains.
+5. Make decision on whether to shrink or inflate balloon
+
+#### Decision algorithm:
+1. Set thresholds of unused sections for VM (100 MB) as well as host (200 MB).
+2. Get host free memory info (using virNodeGetFreeMemory)
+3. For each domain do
+```
+if host available memory > HOST_UNUSED_THRESHOLD then
+    if max balloon size of domain has not reached and domain memory stats < DOMAIN_UNUSED_THRESHOLD then
+        increase the memory allocated to the domain by the minimum of allowed balloon expansion i.e max balloon size - actual balloon size, memory increment to increase free memory to DOMAIN_UNUNSED_THRESHOLD and the maximum balloon increment value (to avoid very large memory allocations at a time)
+    else if unused memory > DOMAIN_UNUSED_THRESHOLD then
+        RECLAIM memory percentage wise. For eg. if 200 MB is unused and DOMAIN_UNUSED_THRESHOLD is 100 MB then decrement would be min(30% of 100, maximum deflation allowed) to reduce sudden reclamation of huge amount of memory.
+else
+    only reclaim memory by above logic
+```
+4. Repeat every interval
