@@ -37,3 +37,5 @@ else
     only reclaim memory by above logic
 ```
 4. Repeat every interval
+
+I have used 1 second as the memory interval for generating my log files. It is important that this run frequently to quickly free up space and allocate them.
